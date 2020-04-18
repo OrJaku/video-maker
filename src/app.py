@@ -1,42 +1,60 @@
 import os
 import cv2
-basedir = os.path.abspath(os.path.dirname(__file__))
-input_path = os.path.join(basedir, "input/hc.mp4")
-output_path = os.path.join(basedir, "output/out_hc.avi")
 
-my_video = cv2.VideoCapture(input_path)
 
-video_length = int(my_video.get(cv2.CAP_PROP_FRAME_COUNT))
-video_fps = int(my_video.get(cv2.CAP_PROP_FPS))
-cap_video_width = int(my_video.get(cv2.CAP_PROP_FRAME_WIDTH))
-cap_video_height = int(my_video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+class LoadVideo:
+    def __init__(self):
+        self.basedir = os.path.abspath(os.path.dirname(__file__))
+        self.input_path = os.path.join(self.basedir, "input/hc.mp4")
+        self.output_path = os.path.join(self.basedir, "output/out_hc.avi")
+        self.video_file = cv2.VideoCapture(self.input_path)
 
-video_width = int(input(f'Put video width (current: {cap_video_width}): '))
-video_height = int(input(f'Put video height (current: {cap_video_height}): '))
+        self.video_length = int(self.video_file.get(cv2.CAP_PROP_FRAME_COUNT))
+        self.cap_video_fps = int(self.video_file.get(cv2.CAP_PROP_FPS))
+        self.cap_video_width = int(self.video_file.get(cv2.CAP_PROP_FRAME_WIDTH))
+        self.cap_video_height = int(self.video_file.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-video_color = int(input('RGB = 1, Gray = 0: '))
+        self.video_width = int(self.cap_video_width/2)
+        self.video_height = int(self.cap_video_height/2)
 
-print(f"Video length: {video_length},FPS {video_fps}, width/height {video_width}/{video_height}")
-fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-out = cv2.VideoWriter(output_path, fourcc, video_fps, (video_width, video_height), video_color)
-while True:
-    ret, frame = my_video.read()
-    gray = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
-    if ret:
-        if video_color == 0:
-            color_value = gray
-        elif video_color == 1:
-            color_value = frame
-        else:
-            color_value = frame
-        resized = cv2.resize(color_value, (video_width, video_height))
-        out.write(resized)
-    else:
-        break
+# video_width = int(input(f'Put video width (current: {cap_video_width}): '))
+# video_height = int(input(f'Put video height (current: {cap_video_height}): '))
 
-    # cv2.imshow('frame', gray)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
 
-out.release()
-cv2.destroyAllWindows()
+        self.video_fps =(self.cap_video_fps * float((input(f'Video speed (1: Normar, 0.2: Slow, 2: Fast ): '))))
+        self.video_color = int(input('RGB = 1, Gray = 0: '))
+
+        print(f"Video length: {self.video_length},FPS {self.video_fps}, width/height {self.video_width}/{self.video_height}")
+        self.fourcc = cv2.VideoWriter_fourcc(*'DIVX')
+        self.out = cv2.VideoWriter(self.output_path, self.fourcc, self.video_fps, (self.video_width, self.video_height), self.video_color)
+
+
+class Main:
+    def __init__(self):
+        pass  
+
+    def modify(self):
+        self.file = LoadVideo()
+        while True:
+            self.ret, self.frame = self.file.video_file.read()
+            self.gray = cv2.cvtColor(self.frame, cv2.COLOR_RGB2GRAY)
+            if self.ret:
+                if self.file.video_color == 0:
+                    self.file.color_value = self.gray
+                elif self.file.video_color == 1:
+                    self.file.color_value = self.frame
+                else:
+                    self.file.color_value = self.frame
+                self.resized = cv2.resize(self.file.color_value, (self.file.video_width, self.file.video_height))
+                self.file.out.write(self.resized)
+            else:
+                break
+            # cv2.imshow('frame', gray)
+            if cv2.waitKey(0) & 0xFF == ord('q'):
+                break
+
+        self.file.out.release()
+        cv2.destroyAllWindows()
+
+main = Main()
+main.modify()
