@@ -2,3 +2,4 @@ venv/
 .idea
 input/
 output/
+__pycache__/
