@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>638</width>
-    <height>288</height>
+    <width>496</width>
+    <height>245</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
      <rect>
       <x>60</x>
       <y>30</y>
-      <width>61</width>
+      <width>41</width>
       <height>20</height>
      </rect>
     </property>
@@ -35,7 +35,7 @@
      <rect>
       <x>60</x>
       <y>50</y>
-      <width>61</width>
+      <width>41</width>
       <height>20</height>
      </rect>
     </property>
@@ -48,7 +48,7 @@
      <rect>
       <x>60</x>
       <y>70</y>
-      <width>61</width>
+      <width>41</width>
       <height>20</height>
      </rect>
     </property>
@@ -61,7 +61,7 @@
      <rect>
       <x>60</x>
       <y>90</y>
-      <width>61</width>
+      <width>41</width>
       <height>20</height>
      </rect>
     </property>
@@ -69,10 +69,10 @@
    <widget class="QPushButton" name="convertVideo">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>60</y>
-      <width>89</width>
-      <height>25</height>
+      <x>120</x>
+      <y>50</y>
+      <width>111</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -215,18 +215,27 @@
    <widget class="QLineEdit" name="ComlitedLbl">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>90</x>
       <y>120</y>
-      <width>113</width>
-      <height>25</height>
+      <width>181</width>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>190</y>
+      <y>150</y>
       <width>67</width>
       <height>21</height>
      </rect>
@@ -242,7 +251,7 @@
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>190</y>
+      <y>150</y>
       <width>251</width>
       <height>25</height>
      </rect>
@@ -252,7 +261,7 @@
     <property name="geometry">
      <rect>
       <x>320</x>
-      <y>190</y>
+      <y>150</y>
       <width>89</width>
       <height>25</height>
      </rect>
@@ -268,8 +277,8 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>220</y>
-      <width>461</width>
+      <y>180</y>
+      <width>411</width>
       <height>16</height>
      </rect>
     </property>
@@ -280,13 +289,32 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QGraphicsView" name="graphicsView">
+   <widget class="QLabel" name="label_6">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>0</y>
-      <width>256</width>
-      <height>192</height>
+      <x>150</x>
+      <y>130</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="lineWidth">
+     <number>1</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QtMultimedia " name="vid" native="true">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>40</y>
+      <width>120</width>
+      <height>80</height>
      </rect>
     </property>
    </widget>
@@ -296,13 +324,21 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>638</width>
-     <height>22</height>
+     <width>496</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QtMultimedia </class>
+   <extends>QWidget</extends>
+   <header location="global">QMediaPlayer</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
  <slots>

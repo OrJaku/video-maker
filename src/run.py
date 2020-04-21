@@ -97,9 +97,9 @@ def converting():
     width = dlg.widthConvert.text()
     height = dlg.heightConvert.text()
     if dlg.colorRadio.isChecked():
-        color = 1
+        color = 1 #color
     else:
-        color = 0
+        color = 0 #gray
     main = Main(fps, color, width, height, path_to_file)
     main.modify()
     dlg.ComlitedLbl.setText(str("Completed"))
