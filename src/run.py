@@ -1,5 +1,8 @@
-from PyQt5 import QtWidgets, uic
+from PyQt5 import QtWidgets, uic, QtGui
 from PyQt5.QtCore import QDir, QBasicTimer
+from PyQt5.QtGui import QPixmap
+from PIL import Image
+
 # from video_app import Main, LoadVideo, basedir
 
 
@@ -20,14 +23,30 @@ class LoadVideo:
         self.cap_video_fps = int(self.video_file.get(cv2.CAP_PROP_FPS))
         self.cap_video_width = int(self.video_file.get(cv2.CAP_PROP_FRAME_WIDTH))
         self.cap_video_height = int(self.video_file.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        
+
+    def preview(self):
+        self.i = 0
+        while self.i != 6:
+            self.i += 1
+            if self.i == 5:
+                _, frame = self.video_file.read()
+                img = Image.fromarray(frame)
+                img.save("temp/preview.jpeg")
+                pixmap = QPixmap("temp/preview.jpeg")
+                pixmap = pixmap.scaled(dlg.ImageLbl.frameGeometry().width(), dlg.ImageLbl.frameGeometry().height())
+                dlg.ImageLbl.setPixmap(pixmap)
+            else:
+                pass
 
 
 class Main:
-    def __init__(self, fps, color, weight, height, path):
+    def __init__(self, fps, color, weight, height, length, path):
         self.output_path = os.path.join(basedir, "output/out_hc.avi")
         self.file = LoadVideo(path)
         self.video_width = int(weight)
         self.video_height = int(height)
+        self.video_length = int(length)
 
         self.video_fps = (self.file.cap_video_fps * float(fps))
         self.video_color = int(color)
@@ -57,10 +76,15 @@ class Main:
                     self.file.color_value = frame
                 else:
                     self.file.color_value = frame
-                resized = cv2.resize(self.file.color_value, (self.video_width, self.video_height))
-                completed_percent = self.step * 100 / self.file.video_length
-                dlg.progressBar.setProperty('value', completed_percent)
-                self.out.write(resized)
+                frame_number = self.step
+                if frame_number <= self.video_length:
+                    resized = cv2.resize(self.file.color_value, (self.video_width, self.video_height))
+                    completed_percent = round(self.step * 100 / self.video_length)
+                    dlg.progressBar.setProperty('value', completed_percent)
+                    img = Image.fromarray(resized)
+                    self.out.write(resized)
+                else:
+                    break
             else:
                 break
             # cv2.imshow('frame', gray)
@@ -76,31 +100,34 @@ dlg = uic.loadUi('run.ui')
 
 def loaded_video_data(path):
     load_file = LoadVideo(path)
+    preview = LoadVideo(path).preview()
     dlg.fpsVideo.setText(str(load_file.cap_video_fps))
     dlg.lengthVideo.setText(str(load_file.video_length))
     dlg.widthVideo.setText(str(load_file.cap_video_width))
     dlg.heightVideo.setText(str(load_file.cap_video_height))
 
-    dlg.fpsConvert.setText(str(""))
-
-    dlg.fpsConvert.setText('1')
     dlg.widthConvert.setText(str(load_file.cap_video_width))
     dlg.heightConvert.setText(str(load_file.cap_video_height))
-    dlg.lengthConvert.setText(str(load_file.video_length))
 
+    dlg.videoLenSlider.setProperty('maximum',load_file.video_length)
+    dlg.lengthConvert.setText(str(dlg.videoLenSlider.value()))
+
+
+    dlg.progressBar.setProperty('value', 0)
     dlg.ComlitedLbl.setText(str(""))
 
 
 def converting():
     path_to_file = dlg.filePathWindow.text()
-    fps = dlg.fpsConvert.text()
+    fps = dlg.fpsSpin.value()
     width = dlg.widthConvert.text()
     height = dlg.heightConvert.text()
+    length = dlg.videoLenSlider.value()
     if dlg.colorRadio.isChecked():
         color = 1 #color
     else:
         color = 0 #gray
-    main = Main(fps, color, width, height, path_to_file)
+    main = Main(fps, color, width, height, length, path_to_file)
     main.modify()
     dlg.ComlitedLbl.setText(str("Completed"))
 
@@ -111,11 +138,6 @@ def get_file():
     loaded_video_data(file_name)
 
 
-dlg.fpsVideo.setReadOnly(True)
-dlg.lengthVideo.setReadOnly(True)
-dlg.widthVideo.setReadOnly(True)
-dlg.heightVideo.setReadOnly(True)
-dlg.ComlitedLbl.setReadOnly(True)
 
 dlg.browseButton.clicked.connect(get_file)
 dlg.convertVideo.clicked.connect(converting)
