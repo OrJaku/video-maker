@@ -110,8 +110,11 @@ def loaded_video_data(path):
     dlg.heightConvert.setText(str(load_file.cap_video_height))
 
     dlg.videoLenSlider.setProperty('maximum',load_file.video_length)
-    dlg.lengthConvert.setText(str(dlg.videoLenSlider.value()))
+    dlg.lengthConvert.setText(f'{str(dlg.videoLenSlider.value()/load_file.cap_video_fps)} sec')
 
+    dlg.label_min_len.setText(str(0))
+    dlg.label_max_len.setText(f'{str(load_file.video_length/load_file.cap_video_fps)} sec')
+    
 
     dlg.progressBar.setProperty('value', 0)
     dlg.ComlitedLbl.setText(str(""))
