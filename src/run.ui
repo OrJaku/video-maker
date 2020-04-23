@@ -37,7 +37,7 @@
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>90</y>
+      <y>70</y>
       <width>61</width>
       <height>20</height>
      </rect>
@@ -47,7 +47,7 @@
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>110</y>
+      <y>90</y>
       <width>61</width>
       <height>20</height>
      </rect>
@@ -55,13 +55,13 @@
    </widget>
    <widget class="QLineEdit" name="lengthConvert">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>70</y>
-      <width>61</width>
+      <x>210</x>
+      <y>320</y>
+      <width>101</width>
       <height>20</height>
      </rect>
     </property>
@@ -271,7 +271,7 @@
      <enum>QFrame::Panel</enum>
     </property>
     <property name="text">
-     <string>  </string>
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="fpsVideo">
@@ -341,14 +341,14 @@
    <widget class="QLabel" name="ComlitedLbl">
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>440</x>
       <y>110</y>
-      <width>47</width>
-      <height>13</height>
+      <width>71</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string> </string>
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="label_7">
@@ -364,24 +364,11 @@
      <string>Speed</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_8">
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>70</y>
-      <width>31</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Length</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>110</y>
+      <y>90</y>
       <width>31</width>
       <height>20</height>
      </rect>
@@ -394,7 +381,7 @@
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>90</y>
+      <y>70</y>
       <width>31</width>
       <height>20</height>
      </rect>
@@ -406,9 +393,9 @@
    <widget class="QSlider" name="videoLenSlider">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>300</y>
-      <width>521</width>
+      <x>10</x>
+      <y>290</y>
+      <width>501</width>
       <height>20</height>
      </rect>
     </property>
@@ -425,14 +412,14 @@
    <widget class="QLabel" name="label_max_len">
     <property name="geometry">
      <rect>
-      <x>480</x>
+      <x>450</x>
       <y>330</y>
-      <width>47</width>
-      <height>13</height>
+      <width>61</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string> </string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -441,14 +428,14 @@
    <widget class="QLabel" name="label_min_len">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>-10</x>
       <y>323</y>
       <width>47</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string> </string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>

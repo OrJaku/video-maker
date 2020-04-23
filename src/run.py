@@ -14,18 +14,19 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class LoadVideo:
     def __init__(self, path_to_file):
-        self.path = path_to_file
 
-        self.input_path = os.path.join(self.path)
-        self.video_file = cv2.VideoCapture(self.input_path)
+        self.path = path_to_file #path to file 
 
-        self.video_length = int(self.video_file.get(cv2.CAP_PROP_FRAME_COUNT))
-        self.cap_video_fps = int(self.video_file.get(cv2.CAP_PROP_FPS))
-        self.cap_video_width = int(self.video_file.get(cv2.CAP_PROP_FRAME_WIDTH))
-        self.cap_video_height = int(self.video_file.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        self.input_path = os.path.join(self.path) #path to file 
+        self.video_file = cv2.VideoCapture(self.input_path) #Capture video from path
+
+        self.video_length = int(self.video_file.get(cv2.CAP_PROP_FRAME_COUNT)) #get video length
+        self.cap_video_fps = int(self.video_file.get(cv2.CAP_PROP_FPS)) #get fps
+        self.cap_video_width = int(self.video_file.get(cv2.CAP_PROP_FRAME_WIDTH)) #get width
+        self.cap_video_height = int(self.video_file.get(cv2.CAP_PROP_FRAME_HEIGHT))# get height
         
 
-    def preview(self):
+    def preview(self): # get preview image of video
         self.i = 0
         while self.i != 6:
             self.i += 1
@@ -39,11 +40,13 @@ class LoadVideo:
             else:
                 pass
 
+        
+
 
 class Main:
     def __init__(self, fps, color, weight, height, length, path):
-        self.output_path = os.path.join(basedir, "output/out_hc.avi")
-        self.file = LoadVideo(path)
+        self.output_path = os.path.join(basedir, "output/out_hc.avi") #output path
+        self.file = LoadVideo(path) 
         self.video_width = int(weight)
         self.video_height = int(height)
         self.video_length = int(length)
@@ -100,27 +103,33 @@ dlg = uic.loadUi('run.ui')
 
 def loaded_video_data(path):
     load_file = LoadVideo(path)
-    preview = LoadVideo(path).preview()
-    dlg.fpsVideo.setText(str(load_file.cap_video_fps))
+    preview = LoadVideo(path).preview() 
+    #displaying loaded video data 
+    dlg.fpsVideo.setText(str(load_file.cap_video_fps)) 
     dlg.lengthVideo.setText(str(load_file.video_length))
     dlg.widthVideo.setText(str(load_file.cap_video_width))
     dlg.heightVideo.setText(str(load_file.cap_video_height))
 
+    #displaying date to convert 
     dlg.widthConvert.setText(str(load_file.cap_video_width))
     dlg.heightConvert.setText(str(load_file.cap_video_height))
 
+    #set max video length 
     dlg.videoLenSlider.setProperty('maximum',load_file.video_length)
+
     dlg.lengthConvert.setText(f'{str(dlg.videoLenSlider.value()/load_file.cap_video_fps)} sec')
 
+    #set label of videoLenSlider
     dlg.label_min_len.setText(str(0))
     dlg.label_max_len.setText(f'{str(load_file.video_length/load_file.cap_video_fps)} sec')
     
-
+    #set carrent value of videoLenSlider
     dlg.progressBar.setProperty('value', 0)
     dlg.ComlitedLbl.setText(str(""))
 
 
 def converting():
+    #get values from input
     path_to_file = dlg.filePathWindow.text()
     fps = dlg.fpsSpin.value()
     width = dlg.widthConvert.text()
@@ -142,8 +151,17 @@ def get_file():
 
 
 
+
 dlg.browseButton.clicked.connect(get_file)
 dlg.convertVideo.clicked.connect(converting)
+
+
+def update_value():
+    video_fps = int(dlg.fpsVideo.text())
+    new_value = str(round(dlg.videoLenSlider.value()/video_fps, 1))
+    display = dlg.lengthConvert.setText(f'{new_value} sec')
+dlg.videoLenSlider.valueChanged.connect(update_value)
+
 
 if __name__ == "__main__":
 
